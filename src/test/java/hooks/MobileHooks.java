@@ -9,10 +9,8 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * MobileHooks is responsible for initializing and quitting the Appium driver before and after each test scenario.
- *
  * <p>
- * In the @Before hook, it starts the Appium driver (via DriverFactory) so that the mobile application is ready for testing.
- * In the @After hook, it logs the scenario outcome (passed or failed) and shuts down the driver to clean up resources.
+ * The @Before hook starts the Appium driver, and the @After hook logs the scenario result and quits the driver.
  * </p>
  */
 public class MobileHooks {
@@ -20,21 +18,18 @@ public class MobileHooks {
     private static final Logger logger = LogManager.getLogger(MobileHooks.class);
 
     /**
-     * This method is executed before each test scenario.
-     * It logs the start of the scenario and initializes the Appium driver.
+     * Executed before each test scenario.
      *
      * @param scenario the current test scenario.
      */
     @Before
     public void setUp(Scenario scenario) {
         logger.info("=== Starting scenario: {} ===", scenario.getName());
-        // Initialize the Appium driver
         DriverFactory.getDriver();
     }
 
     /**
-     * This method is executed after each test scenario.
-     * It logs whether the scenario passed or failed and then quits the Appium driver.
+     * Executed after each test scenario.
      *
      * @param scenario the test scenario that just finished.
      */
@@ -45,7 +40,6 @@ public class MobileHooks {
         } else {
             logger.info("=== Scenario PASSED: {} ===", scenario.getName());
         }
-        // Quit the Appium driver to release resources
         DriverFactory.quitDriver();
     }
 }

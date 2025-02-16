@@ -5,16 +5,8 @@ import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
 
 /**
- * MobileTestRunner serves as the main entry point for executing our mobile test scenarios.
- *
- * When you run this class, it does the following:
- * - It instructs JUnit to run tests using Cucumber.
- * - It looks for feature files in "src/test/resources/features".
- * - It scans the "steps" and "hooks" packages for step definitions and hooks.
- * - It outputs the test results in a "pretty" (readable) format in the console.
- * - It uses the default dependency injection provided by PicoContainer.
- *
- * This class does not contain any test logic; it only configures and launches the Cucumber tests.
+ * MobileTestRunner is the main entry point for executing mobile test scenarios using Cucumber.
+ * It scans for feature files and step definitions, and outputs test results in a readable format.
  */
 @RunWith(Cucumber.class)
 @CucumberOptions(

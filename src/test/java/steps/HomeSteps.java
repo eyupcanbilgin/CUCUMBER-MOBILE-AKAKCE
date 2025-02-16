@@ -3,9 +3,12 @@ package steps;
 import drivers.DriverFactory;
 import io.cucumber.java.en.*;
 import pages.HomePage;
-
 import static org.junit.Assert.assertTrue;
 
+/**
+ * HomeSteps class defines the step definitions for the Mobile App Laptop Search and Filter feature.
+ * Each step corresponds to an action performed in the mobile application.
+ */
 public class HomeSteps {
 
     private final HomePage homePage;
@@ -14,56 +17,56 @@ public class HomeSteps {
         homePage = new HomePage(DriverFactory.getDriver());
     }
 
-    @Given("uygulamayı konuk kullanıcı olarak açtım")
-    public void openAppAsGuestUser() {
+    @Given("I launch the application as a guest user")
+    public void launchAppAsGuest() {
         homePage.proceedAsGuest();
     }
 
-    @When("Laptop yazar ve klavyeden enter basarım")
-    public void searchLaptopAndPressEnter() {
+    @When("I enter \"Laptop\" into the search field and press Enter")
+    public void enterSearchTextAndPressEnter() {
         homePage.tapSearchBar();
         homePage.tapSecondSearchBox();
         homePage.typeSearchTextInSecondBox("Laptop");
         homePage.pressEnterKey();
     }
 
-    @And("filtre butonuna tıklarım")
-    public void clickFilterButton() {
+    @And("I tap the filter button")
+    public void tapFilterButton() {
         homePage.clickFilterButton();
     }
 
-    @And("bilgisayar donanım alt kategorisini seçerim")
-    public void selectBilgisayarDonanimCategory() {
+    @And("I select the \"Bilgisayar ve Donanım\" category")
+    public void selectCategory() {
         homePage.selectBilgisayarDonanim();
     }
 
-    @And("ürünleri gör butonuna tıklarım")
-    public void clickUrunleriGor() {
+    @And("I tap the \"View Products\" button")
+    public void tapViewProductsButton() {
         homePage.clickUrunleriGor();
     }
 
-    @And("sıralama butonuna tıklarım")
-    public void clickSortButton() {
+    @And("I tap the sort button")
+    public void tapSortButton() {
         homePage.clickSortButton();
     }
 
-    @And("en yüksek fiyatı seçerim")
-    public void selectHighestPrice() {
+    @And("I select the \"Highest Price\" option")
+    public void selectHighestPriceOption() {
         homePage.selectEnYuksekFiyat();
     }
 
-    @And("{int}. ürüne tıklarım")
-    public void selectNthProduct(int index) {
+    @And("I tap on the {int}th unique product in the list")
+    public void tapNthUniqueProduct(int index) {
         homePage.selectNthProduct(index);
     }
 
-    @And("ürüne git butonuna tıklarım")
-    public void clickUruneGit() {
+    @And("I tap the \"Go to Product\" button")
+    public void tapGoToProductButton() {
         homePage.clickUruneGit();
     }
 
-    @Then("satıcıya git butonunu görürüm")
-    public void verifySaticiyaGitButtonIsVisible() {
-        assertTrue("Satıcıya Git butonu görünür değil!", homePage.isSaticiyaGitVisible());
+    @Then("I should see the \"Go to Seller\" button")
+    public void verifyGoToSellerButton() {
+        assertTrue("Go to Seller button is not visible", homePage.isSaticiyaGitVisible());
     }
 }

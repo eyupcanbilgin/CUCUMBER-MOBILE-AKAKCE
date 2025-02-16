@@ -1,129 +1,124 @@
-# AKAKCE Mobile Automation Framework
+# Akakçe Mobile Test Automation
 
-Bu proje, **Akakçe mobil uygulaması** üzerinde otomasyon testleri gerçekleştirmek için geliştirilmiş bir framework’tür. Proje, **Java, Appium, Selenium ve Cucumber** kullanılarak oluşturulmuş olup, **Page Object Model (POM)** mimarisiyle yapılandırılmıştır.
+## Overview
+This project automates mobile testing for the Akakçe Android application using Appium and Cucumber. The automation tests cover searching for a laptop, applying category filters, sorting by the highest price, and verifying navigation to the seller's page.
 
-## 📌 Özellikler
+## Technologies Used
+- **Java 21**
+- **Appium (Java Client 7.6.0)**
+- **Cucumber (7.11.0)**
+- **JUnit (4.13.2)**
+- **Log4j2**
+- **Maven**
 
-- **Mobil Otomasyon**: Android cihazlarda uygulama testleri gerçekleştirir.
-- **Cucumber BDD**: Test senaryoları **Gherkin** dilinde yazılarak iş birliği ve okunabilirlik sağlanır.
-- **Page Object Model**: Sayfa etkileşimleri ayrı sınıflarda toplanarak kod bakımı kolaylaştırılır.
-- **Singleton Driver Yönetimi**: `DriverFactory` ile tek bir `AppiumDriver` örneği yönetilir.
-- **Swipe/Scroll İşlemleri**: Özel swipe ve scroll yöntemleriyle liste elemanları arasında gezinme sağlanır.
-- **Logging**: Test adımları **Log4j** kullanılarak loglanır.
-
----
-
-## 📂 Proje Yapısı
-
+## Project Structure
 ```
-DIAS-MOBILE/
-│── src/
+MobileTestAutomation/
+├── src/
 │   ├── main/
 │   │   ├── java/
-│   │   │   ├── drivers/DriverFactory.java   # AppiumDriver yönetimi
-│   │   │   ├── hooks/MobileHooks.java       # Test öncesi & sonrası işlemler
-│   │   │   ├── pages/HomePage.java          # Ana sayfa Page Object
-│   │   │   ├── steps/HomeSteps.java         # Cucumber step tanımları
-│   │   │   ├── runners/MobileTestRunner.java # Testleri çalıştırma
-│── src/
+│   │   │   ├── drivers/          # Appium driver setup
+│   │   │   ├── pages/            # Page Object Model classes
+│   │   │   ├── hooks/            # Cucumber hooks
+│   │   │   ├── steps/            # Step definitions
+│   │   │   ├── runners/          # Test runner
+│   │   │   ├── utils/            # Utility classes (if needed)
 │   ├── test/
 │   │   ├── resources/
-│   │   │   ├── features/                    # Gherkin formatında feature dosyaları
-│── pom.xml                                  # Proje bağımlılıkları
-│── README.md                                # Dokümantasyon
+│   │   │   ├── features/        # Cucumber feature files
+│   ├── pom.xml                  # Maven dependencies
 ```
 
----
+## Setup & Installation
 
-## 🛠 Gereksinimler
+### Prerequisites
+Ensure that you have the following installed:
+- **Java 21**
+- **Android SDK & Emulator / Physical Device**
+- **Appium Server**
+- **Maven**
 
-- **Java JDK**: 21 veya daha üst bir sürüm.
-- **Maven**: Proje bağımlılıkları ve derleme yönetimi için.
-- **Appium Server**: Yüklü ve çalışır durumda olmalıdır (**Varsayılan URL:** `http://127.0.0.1:4723`).
-- **Android Cihaz/Emülatör**: Hedef uygulama (`com.akakce.akakce`) yüklü ve hazır durumda.
-- **Android SDK ve Cihaz Sürücüleri**: Bağlantı ve testler için gereklidir.
+### Steps to Set Up
+1. Clone the repository:
+   ```sh
+   git clone <repository-url>
+   cd MobileTestAutomation
+   ```
+2. Install dependencies using Maven:
+   ```sh
+   mvn clean install
+   ```
+3. Start Appium server:
+   ```sh
+   appium --log-level error
+   ```
+4. Connect an Android device or start an emulator.
 
----
-
-## 📌 Bağımlılıklar
-
-Proje **Maven** kullanılarak yönetilmektedir. Ana bağımlılıklar:
-
-- **Appium Java Client**
-- **Selenium Java**
-- **Cucumber Java & JUnit**
-- **Log4j**
-- **PicoContainer** (*Cucumber default DI*)
-
-Tüm bağımlılıklar `pom.xml` dosyasında belirtilmiştir.
-
----
-
-## 🚀 Kurulum
-
-### Depoyu Klonlayın:
-```bash
-git clone <repository-url>
-cd DIAS-MOBILE
-```
-
-### Bağımlılıkları Yükleyin:
-```bash
-mvn clean install
-```
-
-### Appium Server'ı Başlatın:
-```bash
-appium
-```
-
-### Android Cihaz/Emülatörü Bağlayın:
-- **Fiziksel cihaz** kullanıyorsanız **USB hata ayıklamasını etkinleştirin**.
-- Veya uygun bir **emülatörü başlatın**.
-
----
-
-## 🏃‍♂️ Testleri Çalıştırma
-
-Testleri çalıştırmak için iki yöntem kullanabilirsiniz:
-
-### **Maven Komutu:**
-```bash
+## Running Tests
+To execute the mobile tests, use the following command:
+```sh
 mvn test
 ```
 
-### **IDE (Örneğin IntelliJ IDEA):**
-1. **Projeyi açın**.
-2. `runners.MobileTestRunner` sınıfını **çalıştırın**.
+### Running Specific Tests
+You can run a specific feature file using:
+```sh
+mvn test -Dcucumber.features=src/test/resources/features/laptopSearch.feature
+```
 
----
+## Test Scenario
+### Feature: Mobile App Laptop Search and Filter
+```
+As a mobile app user,
+I want to search for a laptop, apply the appropriate filters, and sort by highest price,
+So that I can view detailed product information and navigate to the seller's page.
 
-## 🔄 Swipe ve Scroll İşlemleri
+Scenario: Search for a laptop, filter by category, sort by highest price, and navigate to product details
+    Given I launch the application as a guest user
+    When I enter "Laptop" into the search field and press Enter
+    And I tap the filter button
+    And I select the "Bilgisayar ve Donanım" category
+    And I tap the "View Products" button
+    And I tap the sort button
+    And I select the "Highest Price" option
+    And I tap on the 10th unique product in the list
+    And I tap the "Go to Product" button
+    Then I should see the "Go to Seller" button
+```
 
-`HomePage.java` dosyasında, **Appium’un `mobile: scrollGesture`** komutu kullanılarak **swipe işlemleri** uygulanmıştır. Swipe bölgesi, cihazın ortasından başlayıp, **alt-yukarı** yönde kaydıracak şekilde ayarlanmıştır. **(Gerekirse parametrelerde değişiklik yapabilirsiniz.)**
+## Project Components
 
----
+### 1. **Driver Factory (`DriverFactory.java`)**
+- Initializes and manages the Appium driver.
+- Uses **AndroidDriver** with **UiAutomator2**.
+- Sets capabilities for the Akakçe app.
 
-## 📜 Logging
+### 2. **Hooks (`MobileHooks.java`)**
+- Handles test setup (`@Before`) and teardown (`@After`).
+- Logs test results.
 
-Test senaryoları sırasında **detaylı loglama** yapılır. **Log4j** kullanılarak;
+### 3. **Page Object Model (`HomePage.java`)**
+- Implements interactions with UI elements:
+    - Search for products.
+    - Apply filters and sorting.
+    - Select a product.
+    - Navigate to the seller page.
 
-- **Senaryo başlangıç & bitişleri**,
-- **Hata durumları**,
-- **Önemli adımlar**
+### 4. **Step Definitions (`HomeSteps.java`)**
+- Implements the Cucumber steps for the feature file.
 
-📌 **Konsola ve dosyalara loglanmaktadır.**
+### 5. **Test Runner (`MobileTestRunner.java`)**
+- Runs Cucumber scenarios using JUnit.
 
----
+## Troubleshooting
+- If the driver does not start, ensure the Appium server is running.
+- If tests fail due to element visibility, increase the wait time in `WebDriverWait`.
+- Verify that the Akakçe app is installed on the device.
 
-## 💡 Katkıda Bulunma
+## Contributing
+1. Fork the repository.
+2. Create a feature branch (`git checkout -b feature-branch`).
+3. Commit changes (`git commit -m "Add new feature"`).
+4. Push to the branch (`git push origin feature-branch`).
+5. Open a Pull Request.
 
-Her türlü **katkı** ve **iyileştirme önerileri** memnuniyetle karşılanır. Lütfen **projeyi fork'layın** ve **pull request açın**.
-
----
-
-📧 **İletişim için:** `your-email@example.com`
-
----
-
-**📌 Lisans:** MIT License

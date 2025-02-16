@@ -8,10 +8,8 @@ import java.net.URL;
 
 /**
  * DriverFactory is responsible for creating and managing the AppiumDriver instance.
- *
- * Bu sınıf, herhangi bir bağlı Android cihazda testlerin çalışabilmesi için gerekli
- * temel DesiredCapabilities ayarlarını sabit olarak tanımlar.
- * AppiumDriver tekil (singleton) olarak oluşturulur.
+ * This class defines the basic DesiredCapabilities required to run tests on any connected Android device.
+ * The AppiumDriver is implemented as a singleton.
  */
 public class DriverFactory {
 
@@ -20,7 +18,7 @@ public class DriverFactory {
 
     /**
      * Returns the singleton AppiumDriver instance.
-     * If the driver is not yet created, it calls createDriver() to initialize it.
+     * If the driver has not been created, it initializes it using createDriver().
      *
      * @return the AppiumDriver instance.
      */
@@ -33,29 +31,25 @@ public class DriverFactory {
 
     /**
      * Creates and initializes the AppiumDriver with fixed desired capabilities.
+     * <p>
+     * The following capabilities are set:
+     * - platformName: "Android"
+     * - automationName: "UiAutomator2"
+     * - appPackage and appActivity are set to sample values; update these for your application.
+     * - autoGrantPermissions: true
+     * </p>
      *
-     * Bu metot, belirli sabit ayarlarla AppiumDriver'ı başlatır.
-     * "platformName" olarak "Android", "automationName" olarak "UiAutomator2" kullanılır.
-     * Ayrıca, örnek olarak appPackage ve appActivity ayarları sabit değerlerle belirlenmiştir.
-     * Gerçek uygulama için bu değerleri doğru bilgilerle güncellemeniz gerekir.
-     *
-     * @throws RuntimeException if the driver creation fails.
+     * @throws RuntimeException if driver creation fails.
      */
     private static void createDriver() {
         try {
             DesiredCapabilities caps = new DesiredCapabilities();
-            // Platform ve otomasyon framework ayarları
             caps.setCapability("platformName", "Android");
             caps.setCapability("automationName", "UiAutomator2");
-
-            // Uygulama paket ve aktivite ayarları (örnek değerler, gerçek uygulama için güncellenmeli)
             caps.setCapability("appPackage", "com.akakce.akakce");
             caps.setCapability("appActivity", "com.akakce.akakce.ui.splash.SplashActivity");
-
-            // Ekstra capabilities eklenebilir
             caps.setCapability("autoGrantPermissions", true);
 
-            // Appium server'a bağlantı sağlanır (yerel sunucu: 127.0.0.1:4723)
             driver = new AndroidDriver(new URL("http://127.0.0.1:4723"), caps);
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,8 +59,7 @@ public class DriverFactory {
 
     /**
      * Quits the AppiumDriver and resets the driver instance.
-     *
-     * Bu metot, mevcut AppiumDriver'ı kapatır ve bellekteki referansı sıfırlar.
+     * This method shuts down the current AppiumDriver and clears its reference.
      */
     public static void quitDriver() {
         if (driver != null) {
