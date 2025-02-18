@@ -41,7 +41,7 @@ Ensure that you have the following installed:
 ### Steps to Set Up
 1. Clone the repository:
    ```sh
-   git clone <repository-url>
+   git clone <eyupcanbilgin>
    cd MobileTestAutomation
    ```
 2. Install dependencies using Maven:
